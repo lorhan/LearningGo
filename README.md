@@ -406,6 +406,133 @@ Structs, slices, maps, method sets, embedding, interface design, and idiomatic c
 
 Goroutines, channels, select, sync primitives, race conditions, and common concurrency patterns (pipelines, worker pools).
 
+
+### **Exercise Set 1: Goroutines**
+
+```go
+// TODO:
+// 1. Write a function say(msg string) that prints the message.
+// 2. Call say("normal call") normally.
+// 3. Call say("goroutine call") inside a goroutine.
+// 4. Launch 5 goroutines in a loop, each printing its index.
+// 5. Observe interleaving of output.
+// 6. Use time.Sleep to keep main alive long enough to see all output.
+// 7. Replace Sleep with sync.WaitGroup so goroutines finish cleanly.
+```
+
+
+
+### **Exercise Set 2: Channels (Unbuffered & Buffered)**
+
+```go
+// TODO:
+// 1. Create an unbuffered channel of type int.
+// 2. Launch a goroutine that sends a number on the channel.
+// 3. Receive it in main and print it.
+// 4. Create a buffered channel of size 3.
+// 5. Send 3 values without blocking.
+// 6. Receive and print all values.
+// 7. Write a sendString(ch chan string) function and call it as a goroutine.
+// 8. Use a channel to return a computed result from a goroutine.
+```
+
+
+
+### **Exercise Set 3: Select & Time-Based Operations**
+
+```go
+// TODO:
+// 1. Create two channels: ch1 and ch2.
+// 2. Launch a goroutine that sends to ch1 after 200ms.
+// 3. Launch a goroutine that sends to ch2 after 500ms.
+// 4. Use select to print whichever value arrives first.
+// 5. Add a default case that prints "waiting..." when no channel is ready.
+// 6. Use time.After to trigger a timeout if no value arrives within 300ms.
+// 7. Create a time.Ticker that prints "tick" every 100ms for 1 second.
+// 8. Use select to handle ticker.C and a quit channel that stops the ticker.
+```
+
+
+
+### **Exercise Set 4: Sync Primitives (WaitGroup, Mutex, RWMutex, Atomic)**
+
+```go
+// TODO:
+// 1. Use WaitGroup to run 5 goroutines printing their ID.
+// 2. Wait for all goroutines to finish.
+// 3. Create a shared counter.
+// 4. Increment it with 100 goroutines, 100 times each → expect 10,000.
+// 5. Protect the counter using sync.Mutex.
+// 6. Rewrite the increment using sync/atomic.AddInt64.
+// 7. Create a map shared between goroutines.
+// 8. Protect it with sync.RWMutex during reads/writes.
+// 9. Measure atomic vs mutex performance using time.Since.
+```
+
+
+
+### **Exercise Set 5: Race Conditions**
+
+```go
+// TODO:
+// 1. Create a shared variable x := 0.
+// 2. Start 50 goroutines that increment x without synchronization.
+// 3. Print final x and observe it is NOT 50.
+// 4. Run using: go run -race main.go
+// 5. Observe race detector output.
+// 6. Fix the race using a Mutex.
+// 7. Fix the race using an Atomic integer.
+// 8. Explain in comments why races happen even with append() on slices.
+```
+
+
+
+### **Exercise Set 6: Concurrency Patterns — Pipelines**
+
+```go
+// TODO:
+//
+// 1. Build a 3-stage pipeline:
+//      Stage 1: generate numbers 1–5 into a channel.
+//      Stage 2: square each number.
+//      Stage 3: convert each number to a string.
+// 2. Connect stages using channels.
+// 3. Print the final output strings.
+// 4. Modify pipeline to handle errors (return a struct {value, err}).
+// 5. Add cancellation using context.WithCancel.
+// 6. Make Stage 2 parallel by launching 2 worker goroutines.
+// 7. Ensure Stage 3 collects results in correct order.
+```
+
+
+
+### **Exercise Set 7: Concurrency Patterns — Worker Pools**
+
+```go
+// TODO:
+//
+// 1. Write a worker function:
+//      worker(id int, jobs <-chan int, results chan<- int)
+//    It should square the input.
+//
+// 2. Create channels: jobs and results.
+//
+// 3. Launch 3 workers as goroutines.
+//
+// 4. Send 10 jobs (numbers 1–10), then close jobs.
+//
+// 5. Collect 10 results and print them.
+//
+// 6. Modify workers to simulate variable processing time using Sleep.
+//
+// 7. Add context cancellation to stop all workers early.
+//
+// 8. Add error handling by returning structs {jobID, result, err}.
+```
+
+
+
+
 ## 4. Error Handling & Panic/Recover
 
 Idiomatic error handling, wrapping/annotating errors, sentinel errors, panic, recover, and structured error patterns.
